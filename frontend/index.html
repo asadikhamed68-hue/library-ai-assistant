@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<!-- Copyright (c) 2026 Asadik Hamed. All rights reserved. See LICENSE. -->
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
+  <meta name="description" content="Official UAEU Libraries AI Assistant beta demo for library services and academic resource discovery" />
+  <meta name="author" content="Asadik Hamed" />
+  <meta name="copyright" content="Copyright (c) 2026 Asadik Hamed. All rights reserved." />
+  <meta name="theme-color" content="#d71920" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://uaeu.libanswers.com; style-src 'self' 'unsafe-inline' https://uaeu.libanswers.com; img-src 'self' data: https://d2jv02qf7xgjwx.cloudfront.net https://*.uaeu.ac.ae; connect-src 'self' http://127.0.0.1:8000 https://uaeu.libanswers.com https://*.uaeu.ac.ae; frame-src https://uaeu.libanswers.com; object-src 'none'; base-uri 'self'; frame-ancestors 'self'; form-action 'self';">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
+  <title>UAEU Libraries AI Assistant - Beta</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="styles.css?v=0.1.3">
+</head>
+<body>
+
+  <header class="header">
+    <div class="header-left">
+      <button type="button" class="menu-btn" id="menuBtn" aria-label="Open quick access menu" aria-controls="sidebar" aria-expanded="false">☰</button>
+      <img src="https://d2jv02qf7xgjwx.cloudfront.net/accounts/239990/images/LIBRARY-DEANSHIP-Logo-01.jpg" class="logo" alt="UAEU Libraries">
+      <span class="app-title"><span id="appTitle">UAEU Libraries AI Assistant</span> <span class="beta-badge" id="betaBadge">Beta</span></span>
+    </div>
+    <div class="header-controls">
+      <button type="button" class="control-btn" id="libchatBtn" aria-label="Talk to a librarian"><span aria-hidden="true">💬</span> <span id="libchatText">LibChat</span></button>
+      <button type="button" class="control-btn" id="headerLangBtn" aria-label="Switch language"><span aria-hidden="true">🌐</span> <span>AR/EN</span></button>
+      <button type="button" class="control-btn" id="headerThemeBtn" aria-label="Switch to dark mode" aria-pressed="false"><span aria-hidden="true">🌙</span></button>
+    </div>
+  </header>
+
+
+
+  <div class="sidebar-overlay" id="sidebarOverlay" aria-hidden="true"></div>
+
+  <aside id="sidebar" class="sidebar" aria-labelledby="sidebarTitle" aria-hidden="true" inert>
+    <button type="button" class="close-sidebar" id="closeSidebarBtn" aria-label="Close quick access menu">✕</button>
+    <div class="sidebar-title" id="sidebarTitle">Quick Access</div>
+    <button type="button" id="newConversationBtn" class="sidebar-link sidebar-action">
+      <span aria-hidden="true">＋</span> <span id="newConversationText">New conversation</span>
+    </button>
+    <div class="sidebar-section-label" id="officialResourcesText">Official resources</div>
+    <a id="libraryWebsiteLink" href="https://www.uaeu.ac.ae/en/library/" target="_blank" rel="noopener noreferrer" class="sidebar-link">
+      <span aria-hidden="true">📚</span> <span id="linkLibText">Library Website</span>
+    </a>
+    <a id="libraryHoursLink" href="https://www.uaeu.ac.ae/en/library/libraryhours.shtml" target="_blank" rel="noopener noreferrer" class="sidebar-link">
+      <span aria-hidden="true">⏰</span> <span id="linkHoursText">Library Hours</span>
+    </a>
+    <a id="libraryFaqLink" href="https://www.uaeu.ac.ae/en/library/faqs.shtml" target="_blank" rel="noopener noreferrer" class="sidebar-link">
+      <span aria-hidden="true">❓</span> <span id="linkFaqText">Frequently Asked Questions</span>
+    </a>
+    <a href="#" id="databaseLink" class="sidebar-link">
+      <span aria-hidden="true">🗄️</span> <span id="linkDatabaseText">Databases</span>
+    </a>
+    <a id="resourceRequestLink" href="https://www.uaeu.ac.ae/en/library/forms/requesttitle.shtml" target="_blank" rel="noopener noreferrer" class="sidebar-link">
+      <span aria-hidden="true">➕</span> <span id="linkRequestText">Request a resource</span>
+    </a>
+    <a href="https://uaeu.account.worldcat.org/account/checkouts" target="_blank" rel="noopener noreferrer" class="sidebar-link">
+      <span aria-hidden="true">👤</span> <span id="linkAccountText">My Account</span>
+    </a>
+    <a href="#" id="aboutLink" class="sidebar-link">
+      <span aria-hidden="true">ℹ️</span> <span id="linkAboutText">About</span>
+    </a>
+  </aside>
+
+  <div id="aboutModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="aboutTitle" aria-describedby="aboutDesc1" aria-hidden="true">
+    <div class="modal-box" tabindex="-1">
+      <button type="button" class="close-modal" id="aboutCloseBtn" aria-label="Close about dialog">&times;</button>
+      <h2 id="aboutTitle">About the UAEU Libraries AI Assistant</h2>
+
+      <p id="aboutDesc1"><b>UAEU Libraries AI Assistant</b> is the official beta demonstration of an interactive library guide for UAEU students, faculty, staff, researchers, and visitors.</p>
+
+<p id="aboutDesc2"><b>Features:</b></p>
+      <ul id="aboutFeatures" class="about-list">
+      <li>Answer questions about UAEU Libraries services using approved and official sources</li>
+      <li>Search books and eBooks in the UAEU Libraries catalog</li>
+      <li>Discover scholarly articles through available academic discovery services</li>
+      <li>Recommend suitable UAEU databases for a research topic</li>
+      <li>Provide direct catalog, DOI, database, form, and policy links when available</li>
+      <li>Support conversations in English and Arabic</li>
+    </ul>
+
+    <p id="aboutDesc3"><b>Data Sources:</b></p>
+    <ul id="aboutSources" class="about-list">
+      <li><b>Catalog:</b> OCLC WorldCat Discovery for UAEU Libraries records</li>
+      <li><b>Articles:</b> Crossref, OpenAlex, PubMed, Europe PMC, DOAJ, CORE, Semantic Scholar, and WorldCat when available</li>
+      <li><b>Library information:</b> Official UAEU Libraries webpages and approved policy documents</li>
+    </ul>
+
+    <p id="aboutDesc4" class="about-help"><b>Need human help?</b> Click the <b>💬 LibChat</b> button to chat with a librarian.</p>
+
+    <p id="aboutDisclaimer" class="about-disclaimer"><b>Beta notice:</b> For time-sensitive or account-specific matters, confirm the information through the linked official source or contact a librarian.</p>
+
+    <p class="about-note">
+      <span id="aboutVersion">Beta Demo · Version 0.1</span> ·
+      <span id="aboutDev">UAEU Libraries</span> ·
+      <span id="aboutYear">2026</span>
+    </p>
+
+    <footer class="about-footer">
+      <span class="about-author">
+        <span id="aboutDevelopedLabel">Developed by</span>
+        <a href="https://www.linkedin.com/in/asadik-hamed-158937297/" target="_blank" rel="noopener noreferrer">Asadik Hamed</a>
+      </span>
+      <span id="aboutCopyright">Copyright © 2026 Asadik Hamed. All rights reserved.</span>
+    </footer>
+  </div>
+</div>
+
+  <main id="chat" class="chat-container" aria-live="polite" aria-relevant="additions" aria-label="Conversation"></main>
+
+  <!-- LibChat Close Button -->
+  <button type="button" class="libchat-close-btn" id="libchatCloseBtn" aria-label="Close librarian chat">✕</button>
+
+  <!-- LibChat Widget Container -->
+  <div id="libchat_1989346ba8efc72bf598fe6803917b73"></div>
+
+  <div class="input-bar">
+    <div id="filterPanel" class="filter-panel" aria-hidden="true">
+      <div class="filter-title" id="filterTitle">Search filters</div>
+
+      <div class="filter-row" id="bookFormatFilter">
+        <label for="filterFormat" id="filterFormatLabel">Book format</label>
+        <select id="filterFormat">
+          <option value="any" id="filterFormatAny">Any format</option>
+          <option value="ebook" id="filterFormatEbook">eBook</option>
+          <option value="print" id="filterFormatPrint">Print book</option>
+          <option value="audiobook" id="filterFormatAudio">Audiobook</option>
+        </select>
+      </div>
+
+      <label class="filter-check" id="articleOpenAccessFilter">
+        <input type="checkbox" id="filterOpenAccess">
+        <span id="filterOpenAccessLabel">Open Access only</span>
+      </label>
+
+      <div class="filter-row two">
+        <div class="filter-field">
+          <label for="filterYearFrom" id="filterYearFromLabel">From year</label>
+          <input type="number" id="filterYearFrom" min="1800" max="2028" inputmode="numeric" placeholder="2020">
+        </div>
+        <div class="filter-field">
+          <label for="filterYearTo" id="filterYearToLabel">To year</label>
+          <input type="number" id="filterYearTo" min="1800" max="2028" inputmode="numeric" placeholder="2026">
+        </div>
+      </div>
+
+      <div class="filter-actions">
+        <button type="button" class="small-action-btn" id="filterClearBtn">Clear</button>
+        <button type="button" class="small-action-btn" id="filterApplyBtn">Apply</button>
+      </div>
+    </div>
+
+    <button type="button" class="filter-toggle-btn" id="filterBtn" aria-label="Search filters" title="Search filters" aria-controls="filterPanel" aria-expanded="false">⚙</button>
+    <div class="input-wrapper">
+      <label class="sr-only" for="msgInput" id="messageInputLabel">Ask the UAEU Libraries AI Assistant</label>
+      <textarea
+        id="msgInput"
+        placeholder="Ask about books, authors, or topics..."
+        rows="1"></textarea>
+    </div>
+    <button type="button" class="send-btn" id="sendBtn">Send</button>
+  </div>
+
+<script src="config.js?v=0.1.3" defer></script>
+<script src="app.js?v=0.1.3" defer></script>
+
+</body>
+</html>
+
+

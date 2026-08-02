@@ -1,0 +1,51 @@
+name: Quality checks
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      ENVIRONMENT: development
+      OCLC_CLIENT_ID: test-client
+      OCLC_CLIENT_SECRET: test-secret
+      GEMINI_API_KEY: ""
+      SECRET_KEY: test-secret-key-that-is-at-least-32-characters
+      ENABLE_SEMANTIC_EMBEDDINGS: "false"
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: .python-version
+          cache: pip
+
+      - name: Install dependencies
+        run: python -m pip install --upgrade pip && python -m pip install -r requirements-dev.txt
+
+      - name: Compile Python modules
+        run: python -m compileall -q backend
+
+      - name: Run regression tests
+        run: python -m pytest -q
+
+      - name: Scan Python code
+        run: python -m bandit -q -r backend -lll
+
+      - name: Audit Python dependencies
+        run: python -m pip_audit -r requirements.txt
+
+      - name: Check frontend JavaScript syntax
+        run: |
+          node --check frontend/config.js
+          node --check frontend/app.js
