@@ -3,14 +3,15 @@ import runpy
 import sys
 from pathlib import Path
 from types import SimpleNamespace
-from unittest.mock import Mock
+from unittest.mock import AsyncMock, Mock
 
 import pytest
 from fastapi import HTTPException
 from fastapi.testclient import TestClient
 from pydantic import ValidationError
 
-from backend.app import app
+from backend import app as app_module
+from backend.app import AIAnalysisService, app
 from backend.cache import SearchCache
 from backend.models import SearchFilters
 from backend.search_planner import SearchPlannerService
@@ -112,3 +113,126 @@ def test_direct_python_launcher_starts_on_localhost(monkeypatch):
 
     uvicorn_run.assert_called_once()
     assert uvicorn_run.call_args.kwargs["host"] == "127.0.0.1"
+
+
+
+def test_article_ranking_uses_fallback_for_non_object_ai_json(monkeypatch):
+    raw_articles = [{
+        "title": "Reliable Library Search",
+        "authors": "A. Researcher",
+        "year": "2026",
+        "journal": "Library Systems",
+        "source": "CrossRef",
+        "open_access": True,
+    }]
+    query_info = {"core_topic": "library search", "is_arabic": False}
+
+    monkeypatch.setattr(app_module, "GEMINI_MODEL", object())
+    monkeypatch.setattr(
+        app_module,
+        "generate_gemini_content",
+        AsyncMock(return_value=SimpleNamespace(text='[{"index": 0}]')),
+    )
+
+    result = asyncio.run(
+        AIAnalysisService.analyze_and_rank_articles(
+            "library search", raw_articles, query_info, limit=1
+        )
+    )
+
+    assert len(result["selected"]) == 1
+    assert result["selected"][0]["title"] == "Reliable Library Search"
+
+
+def test_readiness_reports_failed_required_dependency(monkeypatch):
+    monkeypatch.setattr(app_module, "require_admin_key", Mock())
+    monkeypatch.setattr(
+        app_module.token_manager,
+        "get_token",
+        AsyncMock(return_value="test-token"),
+    )
+    monkeypatch.setattr(
+        app_module,
+        "_dependency_readiness",
+        AsyncMock(return_value={
+            "oclc": True,
+            "gemini": True,
+            "semantic_scholar": True,
+            "pubmed": True,
+            "europe_pmc": True,
+            "core": False,
+            "doaj": True,
+            "crossref": False,
+            "openalex": True,
+        }),
+    )
+
+    with TestClient(app) as client:
+        response = client.get("/ready", headers={"X-Admin-Key": "test"})
+
+    assert response.status_code == 200
+    assert response.json()["status"] == "degraded"
+    assert response.json()["services"]["crossref"] is False
+
+
+
+def test_ai_search_complete_mocked_workflow(monkeypatch):
+    raw_book = {
+        "title": "Introduction to Artificial Intelligence",
+        "creator": "A. Author",
+        "date": "2024",
+        "specificFormat": "Book",
+        "oclcNumber": "123456",
+    }
+    analysis = {
+        "selected_indices": [0],
+        "recommendations": [{
+            "index": 0,
+            "relevance_score": 0.95,
+            "why_recommended": "Introduces core artificial intelligence concepts.",
+        }],
+        "follow_up_suggestions": [],
+    }
+
+    monkeypatch.setattr(
+        app_module.OCLCDiscoveryService,
+        "search_books",
+        AsyncMock(return_value=[raw_book]),
+    )
+    monkeypatch.setattr(
+        app_module.OCLCDiscoveryService,
+        "get_book_details",
+        AsyncMock(return_value={
+            "availability_status": "Unknown",
+            "branch_location": "UAE",
+            "shelf_location": "",
+            "call_number": "",
+        }),
+    )
+    monkeypatch.setattr(
+        app_module.AIAnalysisService,
+        "analyze_and_rank_books",
+        AsyncMock(return_value=analysis),
+    )
+
+    with TestClient(app) as client:
+        session = client.post("/session").json()
+        response = client.post(
+            "/ai-search",
+            headers={"X-CSRF-Token": session["csrf_token"]},
+            json={
+                "query": "Books about artificial intelligence",
+                "search_mode": "books",
+                "session_id": session["session_id"],
+                "filters": {"year_from": 2020, "format": "print"},
+            },
+        )
+
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["books"][0]["title"] == raw_book["title"]
+    assert payload["filters_applied"]["year_from"] == 2020
+    assert "availability_status" not in payload["books"][0]
+    assert "branch_location" not in payload["books"][0]
+    assert "Availability: Unknown" not in payload["ai_response"]
+    assert "Location: UAE" not in payload["ai_response"]

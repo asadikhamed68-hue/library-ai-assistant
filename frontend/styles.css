@@ -1397,7 +1397,6 @@
       :root { --header-height: 104px; }
       .header { height: 58px; padding: 0 12px; row-gap: 6px; }
       .app-title { font-size: 14px; }
-      .logo { height: 38px; }
       .menu-btn { font-size: 20px; padding: 6px 10px; }
       .control-btn { padding: 6px 10px; font-size: 12px; }
       .control-btn span:last-child { display: none; }

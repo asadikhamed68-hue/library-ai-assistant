@@ -4,14 +4,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
-  <meta name="description" content="Official UAEU Libraries AI Assistant beta demo for library services and academic resource discovery" />
+  <meta name="description" content="Independent bilingual library AI assistant prototype for academic resource discovery and public library-service guidance" />
   <meta name="author" content="Asadik Hamed" />
   <meta name="copyright" content="Copyright (c) 2026 Asadik Hamed. All rights reserved." />
   <meta name="theme-color" content="#d71920" />
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://uaeu.libanswers.com; style-src 'self' 'unsafe-inline' https://uaeu.libanswers.com; img-src 'self' data: https://d2jv02qf7xgjwx.cloudfront.net https://*.uaeu.ac.ae; connect-src 'self' http://127.0.0.1:8000 https://uaeu.libanswers.com https://*.uaeu.ac.ae; frame-src https://uaeu.libanswers.com; object-src 'none'; base-uri 'self'; frame-ancestors 'self'; form-action 'self';">
   <meta http-equiv="X-Content-Type-Options" content="nosniff">
   <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
-  <title>UAEU Libraries AI Assistant - Beta</title>
+  <title>Library AI Assistant Prototype - Beta</title>
   <link rel="icon" href="data:,">
   <link rel="stylesheet" href="styles.css?v=0.1.3">
 </head>
@@ -20,8 +20,7 @@
   <header class="header">
     <div class="header-left">
       <button type="button" class="menu-btn" id="menuBtn" aria-label="Open quick access menu" aria-controls="sidebar" aria-expanded="false">☰</button>
-      <img src="https://d2jv02qf7xgjwx.cloudfront.net/accounts/239990/images/LIBRARY-DEANSHIP-Logo-01.jpg" class="logo" alt="UAEU Libraries">
-      <span class="app-title"><span id="appTitle">UAEU Libraries AI Assistant</span> <span class="beta-badge" id="betaBadge">Beta</span></span>
+      <span class="app-title"><span id="appTitle">Library AI Assistant Prototype</span> <span class="beta-badge" id="betaBadge">Beta</span></span>
     </div>
     <div class="header-controls">
       <button type="button" class="control-btn" id="libchatBtn" aria-label="Talk to a librarian"><span aria-hidden="true">💬</span> <span id="libchatText">LibChat</span></button>
@@ -67,9 +66,9 @@
   <div id="aboutModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="aboutTitle" aria-describedby="aboutDesc1" aria-hidden="true">
     <div class="modal-box" tabindex="-1">
       <button type="button" class="close-modal" id="aboutCloseBtn" aria-label="Close about dialog">&times;</button>
-      <h2 id="aboutTitle">About the UAEU Libraries AI Assistant</h2>
+      <h2 id="aboutTitle">About the Library AI Assistant Prototype</h2>
 
-      <p id="aboutDesc1"><b>UAEU Libraries AI Assistant</b> is the official beta demonstration of an interactive library guide for UAEU students, faculty, staff, researchers, and visitors.</p>
+      <p id="aboutDesc1"><b>Library AI Assistant Prototype</b> is an independent educational project that explores conversational discovery of public library resources and services.</p>
 
 <p id="aboutDesc2"><b>Features:</b></p>
       <ul id="aboutFeatures" class="about-list">
@@ -90,11 +89,11 @@
 
     <p id="aboutDesc4" class="about-help"><b>Need human help?</b> Click the <b>💬 LibChat</b> button to chat with a librarian.</p>
 
-    <p id="aboutDisclaimer" class="about-disclaimer"><b>Beta notice:</b> For time-sensitive or account-specific matters, confirm the information through the linked official source or contact a librarian.</p>
+    <p id="aboutDisclaimer" class="about-disclaimer"><b>Independent-project notice:</b> This prototype was created by Asadik Hamed for educational and demonstration purposes. It is not an official UAEU Libraries service and is not approved, sponsored, or endorsed by UAEU Libraries. Confirm time-sensitive information through the linked official source or contact a librarian.</p>
 
     <p class="about-note">
-      <span id="aboutVersion">Beta Demo · Version 0.1</span> ·
-      <span id="aboutDev">UAEU Libraries</span> ·
+      <span id="aboutVersion">Independent Beta · Version 0.1</span> ·
+      <span id="aboutDev">Student prototype</span> ·
       <span id="aboutYear">2026</span>
     </p>
 
@@ -154,7 +153,7 @@
 
     <button type="button" class="filter-toggle-btn" id="filterBtn" aria-label="Search filters" title="Search filters" aria-controls="filterPanel" aria-expanded="false">⚙</button>
     <div class="input-wrapper">
-      <label class="sr-only" for="msgInput" id="messageInputLabel">Ask the UAEU Libraries AI Assistant</label>
+      <label class="sr-only" for="msgInput" id="messageInputLabel">Ask the Library AI Assistant Prototype</label>
       <textarea
         id="msgInput"
         placeholder="Ask about books, authors, or topics..."
