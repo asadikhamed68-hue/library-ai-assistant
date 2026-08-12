@@ -5355,7 +5355,7 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(
     title="UAEU Libraries AI Assistant",
-    description="Official beta library-services and academic-resource discovery assistant",
+    description="Independent bilingual library-services and academic-resource discovery prototype",
     version=APP_VERSION,
     lifespan=lifespan,
     docs_url="/docs" if ENVIRONMENT == "development" else None,
@@ -5404,22 +5404,72 @@ async def _combined_cache_size() -> int:
     return await search_cache.size() + await article_cache.size()
 
 
+def _configured_services() -> Dict[str, bool]:
+    """Report configured capabilities without claiming live provider availability."""
+    return {
+        "oclc": bool(OCLC_CLIENT_ID and OCLC_CLIENT_SECRET),
+        "gemini": GEMINI_MODEL is not None,
+        "semantic_scholar": True,
+        "pubmed": True,
+        "europe_pmc": True,
+        "core": bool(CORE_API_KEY),
+        "doaj": True,
+        "crossref": True,
+        "openalex": True,
+    }
+
+
+async def _probe_json_service(url: str, params: Optional[Dict[str, Any]] = None) -> bool:
+    """Make a small, bounded readiness request without logging response content."""
+    try:
+        response = await _http_get(url, params=params, timeout=min(HTTP_TIMEOUT, 5.0))
+        return 200 <= response.status_code < 400
+    except (httpx.HTTPError, RuntimeError):
+        return False
+
+
+async def _dependency_readiness() -> Dict[str, bool]:
+    checks = await asyncio.gather(
+        _probe_json_service(
+            ArticleSearchService.CROSSREF_API,
+            {"query": "library", "rows": 1},
+        ),
+        _probe_json_service(
+            ArticleSearchService.OPENALEX_API,
+            {"search": "library", "per_page": 1},
+        ),
+        _probe_json_service(
+            ArticleSearchService.PUBMED_SEARCH,
+            {"db": "pubmed", "term": "library", "retmax": 1, "retmode": "json"},
+        ),
+        _probe_json_service(
+            ArticleSearchService.EPMC_API,
+            {"query": "library", "format": "json", "pageSize": 1},
+        ),
+        _probe_json_service(
+            f"{ArticleSearchService.DOAJ_API}/library",
+            {"page": 1, "pageSize": 1},
+        ),
+        return_exceptions=False,
+    )
+
+    services = _configured_services()
+    services.update({
+        "crossref": checks[0],
+        "openalex": checks[1],
+        "pubmed": checks[2],
+        "europe_pmc": checks[3],
+        "doaj": checks[4],
+    })
+    return services
+
+
 @app.get("/", response_model=HealthResponse)
 async def root():
     return HealthResponse(
         status="healthy",
         timestamp=datetime.now(timezone.utc).isoformat(),
-        services={
-            "oclc": OCLC_CLIENT_ID is not None,
-            "gemini": GEMINI_MODEL is not None,
-            "semantic_scholar": True,
-            "pubmed": True,
-            "europe_pmc": True,
-            "core": bool(CORE_API_KEY),
-            "doaj": True,
-            "crossref": True,
-            "openalex": True,
-        },
+        services=_configured_services(),
         cache_size=await _combined_cache_size()
     )
 
@@ -5436,17 +5486,7 @@ async def health_check():
     return HealthResponse(
         status="healthy",
         timestamp=datetime.now(timezone.utc).isoformat(),
-        services={
-            "oclc": OCLC_CLIENT_ID is not None,
-            "gemini": GEMINI_MODEL is not None,
-            "semantic_scholar": True,
-            "pubmed": True,
-            "europe_pmc": True,
-            "core": bool(CORE_API_KEY),
-            "doaj": True,
-            "crossref": True,
-            "openalex": True,
-        },
+        services=_configured_services(),
         cache_size=await _combined_cache_size()
     )
 
@@ -5461,20 +5501,14 @@ async def readiness_check(request: Request):
     except Exception:
         pass
 
+    services = await _dependency_readiness()
+    services["oclc"] = oclc_ok
+    required_services = ("oclc", "gemini", "crossref", "openalex")
+
     return HealthResponse(
-        status="healthy" if oclc_ok else "degraded",
+        status="healthy" if all(services[name] for name in required_services) else "degraded",
         timestamp=datetime.now(timezone.utc).isoformat(),
-        services={
-            "oclc": oclc_ok,
-            "gemini": GEMINI_MODEL is not None,
-            "semantic_scholar": True,
-            "pubmed": True,
-            "europe_pmc": True,
-            "core": bool(CORE_API_KEY),
-            "doaj": True,
-            "crossref": True,
-            "openalex": True,
-        },
+        services=services,
         cache_size=await _combined_cache_size()
     )
 

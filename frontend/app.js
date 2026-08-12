@@ -749,7 +749,7 @@ function toggleLang() {
 
 function updateLanguage() {
   const t = isArabic ? {
-    appTitle: 'مساعد مكتبات جامعة الإمارات الذكي',
+    appTitle: 'نموذج مساعد المكتبة الذكي',
     betaBadge: 'تجريبي',
     sidebarTitle: 'روابط سريعة',
     newConversationText: 'محادثة جديدة',
@@ -761,24 +761,24 @@ function updateLanguage() {
     linkRequestText: 'طلب شراء مصدر',
     linkAccountText: 'حسابي',
     linkAboutText: 'حول',
-    aboutTitle: 'حول مساعد مكتبات جامعة الإمارات الذكي',
-    aboutDesc1: 'مساعد مكتبات جامعة الإمارات الذكي هو النسخة التجريبية الرسمية من دليل تفاعلي لخدمة طلبة الجامعة وأعضاء هيئة التدريس والموظفين والباحثين وزوار المكتبة.',
+    aboutTitle: 'حول نموذج مساعد المكتبة الذكي',
+    aboutDesc1: 'نموذج مساعد المكتبة الذكي مشروع تعليمي مستقل يستكشف البحث الحواري في مصادر المكتبة العامة وخدماتها.',
     aboutDesc2: '<b>المميزات:</b>',
     aboutDesc3: '<b>المصادر المعتمدة:</b>',
     aboutDesc4: '<b>تحتاج مساعدة بشرية؟</b> اضغط على زر <b>💬 دردشة المكتبة</b> للتحدث مع أمين المكتبة.',
-    aboutDisclaimer: 'تنبيه النسخة التجريبية: للمعلومات العاجلة أو المتعلقة بحسابك، يرجى التحقق من المصدر الرسمي المرفق أو التواصل مع أمين مكتبة.',
-    aboutVersion: 'نسخة تجريبية · الإصدار 0.1',
-    aboutDev: 'مكتبات جامعة الإمارات',
+    aboutDisclaimer: 'تنبيه: هذا نموذج مستقل طوّره أسدك حامد لأغراض تعليمية وعرض توضيحي. وهو ليس خدمة رسمية لمكتبات جامعة الإمارات ولم تتم الموافقة عليه أو رعايته أو اعتماده منها. يرجى التحقق من المعلومات المتغيرة عبر المصدر الرسمي المرفق أو التواصل مع أمين مكتبة.',
+    aboutVersion: 'نموذج مستقل · الإصدار 0.1',
+    aboutDev: 'مشروع طلابي',
     aboutYear: '2026',
     aboutDevelopedLabel: 'تم التطوير بواسطة',
     aboutCopyright: 'حقوق النشر © 2026 أسدك حامد. جميع الحقوق محفوظة.',
     placeholder: 'ابحث عن مقالات، دوريات، كتب... (مثال: مقالات عن التشفير)',
-    welcome: 'مرحباً! أنا مساعد مكتبات جامعة الإمارات الذكي (نسخة تجريبية).\n\nيمكنني مساعدتك في:\n• البحث عن الكتب والكتب الإلكترونية والمقالات والدوريات\n• اقتراح قواعد البيانات المناسبة لموضوعك\n• الإجابة عن أسئلة خدمات المكتبة مثل الإعارة، ساعات العمل، المواقع، والنماذج\n\nكيف يمكنني مساعدتك اليوم؟',
+    welcome: 'مرحباً! أنا نموذج مساعد المكتبة الذكي (نسخة تجريبية مستقلة).\n\nيمكنني مساعدتك في:\n• البحث عن الكتب والكتب الإلكترونية والمقالات والدوريات\n• اقتراح قواعد البيانات المناسبة لموضوعك\n• الإجابة عن أسئلة خدمات المكتبة مثل الإعارة، ساعات العمل، المواقع، والنماذج\n\nكيف يمكنني مساعدتك اليوم؟',
     libchatText: 'دردشة المكتبة',
     sendBtn: 'إرسال',
-    messageInputLabel: 'اسأل مساعد مكتبات جامعة الإمارات الذكي'
+    messageInputLabel: 'اسأل نموذج مساعد المكتبة الذكي'
   } : {
-    appTitle: 'UAEU Libraries AI Assistant',
+    appTitle: 'Library AI Assistant Prototype',
     betaBadge: 'Beta',
     sidebarTitle: 'Quick Access',
     newConversationText: 'New conversation',
@@ -790,22 +790,22 @@ function updateLanguage() {
     linkRequestText: 'Request a resource',
     linkAccountText: 'My Account',
     linkAboutText: 'About',
-    aboutTitle: 'About the UAEU Libraries AI Assistant',
-    aboutDesc1: 'The UAEU Libraries AI Assistant is the official beta demonstration of an interactive library guide for UAEU students, faculty, staff, researchers, and visitors.',
+    aboutTitle: 'About the Library AI Assistant Prototype',
+    aboutDesc1: 'The Library AI Assistant Prototype is an independent educational project that explores conversational discovery of public library resources and services.',
     aboutDesc2: '<b>Features:</b>',
     aboutDesc3: '<b>Approved sources:</b>',
     aboutDesc4: '<b>Need human help?</b> Click the <b>💬 LibChat</b> button to chat with a librarian.',
-    aboutDisclaimer: 'Beta notice: For time-sensitive or account-specific matters, confirm the information through the linked official source or contact a librarian.',
-    aboutVersion: 'Beta Demo · Version 0.1',
-    aboutDev: 'UAEU Libraries',
+    aboutDisclaimer: 'Independent-project notice: This prototype was created by Asadik Hamed for educational and demonstration purposes. It is not an official UAEU Libraries service and is not approved, sponsored, or endorsed by UAEU Libraries. Confirm time-sensitive information through the linked official source or contact a librarian.',
+    aboutVersion: 'Independent Beta · Version 0.1',
+    aboutDev: 'Student prototype',
     aboutYear: '2026',
     aboutDevelopedLabel: 'Developed by',
     aboutCopyright: 'Copyright © 2026 Asadik Hamed. All rights reserved.',
     placeholder: 'Search for articles, journals, books... (e.g., articles about cryptography)',
-    welcome: "Hello! I'm the UAEU Libraries AI Assistant (Beta).\n\nI can help you:\n• Find books, eBooks, articles, and journals\n• Recommend UAEU databases for your topic\n• Answer library service questions such as borrowing, hours, locations, and forms\n\nHow can I help you today?",
+    welcome: "Hello! I'm the Library AI Assistant Prototype (Independent Beta).\n\nI can help you:\n• Find books, eBooks, articles, and journals\n• Recommend UAEU databases for your topic\n• Answer library service questions such as borrowing, hours, locations, and forms\n\nHow can I help you today?",
     libchatText: 'LibChat',
     sendBtn: 'Send',
-    messageInputLabel: 'Ask the UAEU Libraries AI Assistant'
+    messageInputLabel: 'Ask the Library AI Assistant Prototype'
   };
 
   // Update about features list
@@ -1261,10 +1261,10 @@ function showWelcome() {
 
   if (searchMode === 'books') {
     if (isArabic) {
-      welcome = 'مرحباً! أنا مساعد مكتبات جامعة الإمارات الذكي (نسخة تجريبية).\n\nيمكنني مساعدتك في:\n• البحث عن الكتب والكتب الإلكترونية والمقالات والدوريات\n• اقتراح قواعد البيانات المناسبة لموضوعك\n• الإجابة عن أسئلة خدمات المكتبة مثل الإعارة، ساعات العمل، المواقع، والنماذج\n\nكيف يمكنني مساعدتك اليوم؟';
+      welcome = 'مرحباً! أنا نموذج مساعد المكتبة الذكي (نسخة تجريبية مستقلة).\n\nيمكنني مساعدتك في:\n• البحث عن الكتب والكتب الإلكترونية والمقالات والدوريات\n• اقتراح قواعد البيانات المناسبة لموضوعك\n• الإجابة عن أسئلة خدمات المكتبة مثل الإعارة، ساعات العمل، المواقع، والنماذج\n\nكيف يمكنني مساعدتك اليوم؟';
       suggestions = ['ساعات عمل المكتبة', 'كم كتاب أقدر أستعير؟', 'كتب عن الذكاء الاصطناعي'];
     } else {
-      welcome = 'Hello! I\'m the UAEU Libraries AI Assistant (Beta).\n\nI can help you:\n• Find books, eBooks, articles, and journals\n• Recommend UAEU databases for your topic\n• Answer library service questions such as borrowing, hours, locations, and forms\n\nHow can I help you today?';
+      welcome = 'Hello! I\'m the Library AI Assistant Prototype (Independent Beta).\n\nI can help you:\n• Find books, eBooks, articles, and journals\n• Recommend UAEU databases for your topic\n• Answer library service questions such as borrowing, hours, locations, and forms\n\nHow can I help you today?';
       suggestions = ['Library hours', 'How many books can I borrow?', 'Books about AI'];
     }
   } else if (searchMode === 'research') {
@@ -1278,10 +1278,10 @@ function showWelcome() {
   } else {
     // Default "all" mode
     if (isArabic) {
-      welcome = 'مرحباً! أنا مساعد مكتبات جامعة الإمارات الذكي (نسخة تجريبية).\n\nيمكنني مساعدتك في:\n• البحث عن الكتب والكتب الإلكترونية والمقالات والدوريات\n• اقتراح قواعد البيانات المناسبة لموضوعك\n• الإجابة عن أسئلة خدمات المكتبة مثل الإعارة، ساعات العمل، المواقع، والنماذج\n\nكيف يمكنني مساعدتك اليوم؟';
+      welcome = 'مرحباً! أنا نموذج مساعد المكتبة الذكي (نسخة تجريبية مستقلة).\n\nيمكنني مساعدتك في:\n• البحث عن الكتب والكتب الإلكترونية والمقالات والدوريات\n• اقتراح قواعد البيانات المناسبة لموضوعك\n• الإجابة عن أسئلة خدمات المكتبة مثل الإعارة، ساعات العمل، المواقع، والنماذج\n\nكيف يمكنني مساعدتك اليوم؟';
       suggestions = ['ساعات عمل المكتبة', 'مقالات عن الذكاء الاصطناعي', 'كتب عن تعلم الآلة'];
     } else {
-      welcome = "Hello! I'm the UAEU Libraries AI Assistant (Beta).\n\nI can help you:\n• Find books, eBooks, articles, and journals\n• Recommend UAEU databases for your topic\n• Answer library service questions such as borrowing, hours, locations, and forms\n\nHow can I help you today?";
+      welcome = "Hello! I'm the Library AI Assistant Prototype (Independent Beta).\n\nI can help you:\n• Find books, eBooks, articles, and journals\n• Recommend UAEU databases for your topic\n• Answer library service questions such as borrowing, hours, locations, and forms\n\nHow can I help you today?";
       suggestions = ['Library hours', 'Articles about cryptography', 'Books about artificial intelligence'];
     }
   }
@@ -1330,7 +1330,7 @@ function showProgressIndicator(mode = 'all') {
   const title = document.createElement('div');
   title.className = 'progress-title';
   const titleText = document.createElement('span');
-  titleText.textContent = uiText('UAEU Libraries AI Assistant is working', 'مساعد مكتبات جامعة الإمارات يعمل');
+  titleText.textContent = uiText('Library AI Assistant is working', 'مساعد المكتبة الذكي يعمل');
   const dots = document.createElement('span');
   dots.className = 'agent-typing-dots';
   dots.setAttribute('aria-hidden', 'true');
